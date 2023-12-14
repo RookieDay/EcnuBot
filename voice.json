@@ -1,0 +1,15 @@
+{
+	"data": {
+		"from_wxid": "wxid_rpwam7p2asw822",
+		"is_pc": 0,
+		"mp3_file": "C:\\Users\\GL\\Documents\\WeChat Files\\wxid_4j0mvisfvfzt12\\mp3\\1701773740253610.mp3",
+		"msgid": "4310567307459487205",
+		"raw_msg": "<msg><voicemsg endflag="1" cancelflag="0" forwardflag="0" voiceformat="4" voicelength="2360" length="4059" bufid="0" aeskey="03c0c03c96b1e2c70f637e0c6caffbea" voiceurl="3052020100044b3049020100020450350b6202032f7dd302046b28cc780204656f01ad042433353035383534392d303631342d343838392d393066662d33376266313132306234393902040514000f0201000400" voicemd5="" clientmsgid="49b6c6878b3e8910fec88c139da9227ewxid_4j0mvisfvfzt12_4109_1701773738" fromusername="wxid_rpwam7p2asw822" /></msg>",
+		"room_wxid": "",
+		"silk_file": "",
+		"timestamp": 1701773741,
+		"to_wxid": "wxid_4j0mvisfvfzt12",
+		"wx_type": 34
+	},
+	"type": 11048
+}
