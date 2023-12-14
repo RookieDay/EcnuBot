@@ -1,5 +1,7 @@
 # 【**EcnuBot**】
 <p align="center" width="100%">
+<a href="" target="_blank"><img src="https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuBot.png" alt="EcnuBot" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
+</p>
 
 #### 华东师范大学专属微信机器人,接入华东师范大学研发教育领域对话大模型[EduChat](https://github.com/THUDM/ChatGLM3) ，同时支持[ChatGLM3](https://github.com/THUDM/ChatGLM3)、[qwen-max](https://github.com/QwenLM/Qwen)等多种大模型支持，支持对开放问答、作文批改、启发式教学和情感支持等教育特色功能以及各大模型能力。
 
@@ -57,7 +59,7 @@ pip install -r requirements.txt
 ### 使用示例
 1. 按照config.py文件备注，修改相关配置
 
-2. [AutoDL](https://www.autodl.com/)服务端部署EduChat大模型，部署细节请私信EcnuBot获取
+2. [AutoDL](https://www.autodl.com/)服务端部署EduChat大模型，部署依托于[EduChat](https://github.com/THUDM/ChatGLM3) ，代码魔改已放置demo文件夹，可在服务端替换，如有疑问请私信EcnuBot
 
 3. 运行，启动服务
 
@@ -65,14 +67,24 @@ pip install -r requirements.txt
 python .\main.py
 ```
 
+## :construction: 未来计划
 
+初代EcnuBot主要集成EduChat教育大模型以及其他各大模型支持，随着面向群体以及用户的需求的扩大，从应用性等角度考虑，未来亦着手建设以下功能：
+
+* [ ] Mac版部署支持
+* [ ] 学术解析等功能
+* [ ] 文件内容识别处理、总结等功能
+* [ ] 自定义角色等功能
+* [ ] 更多大模型接入
+* [ ] 小程序、web端、手机端支持等多端应用
+* [ ] ...... 
 
 
 ## :heart: 致谢
 
-- [EduChat](https://github.com/icalk-nlp/EduChat)开源支持 
-- [千帆大模型](https://cloud.baidu.com/product/wenxinworkshop)提供的接口服务 
-- [通义千文问模型](https://www.aliyun.com/product/bailian)提供的接口服务
-- [whisper](https://github.com/openai/whisper)openai提供语音识别支持
-- [awesome-chatgpt](https://github.com/uhub/awesome-chatgpt)提供的开源技术支持
+- [EduChat](https://github.com/icalk-nlp/EduChat) 开源支持 
+- [千帆大模型](https://cloud.baidu.com/product/wenxinworkshop) 提供的接口服务 
+- [通义千文问模型](https://www.aliyun.com/product/bailian) 提供的接口服务
+- [whisper](https://github.com/openai/whisper) openai提供语音识别支持
+- [awesome-chatgpt](https://github.com/uhub/awesome-chatgpt) 提供的开源技术支持
 
