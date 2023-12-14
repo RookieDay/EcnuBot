@@ -1,4 +1,4 @@
-# 【**EcnuBot**】
+# EcnuBot
 <p align="center" width="100%">
 <a href="" target="_blank"><img src="https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuBot.png" alt="EcnuBot" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
 </p>
@@ -11,13 +11,11 @@
 - [本地部署](#robot-本地部署)
   - [硬件要求](#硬件要求)
   - [下载安装](#下载安装)
-  - [使用示例](#使用示例)
-- [微调](#fire-微调)
-  - [软件依赖](#软件依赖)
-  - [使用方法](#使用方法)
-- [友情链接](#link-友情链接)
+  - [部署示例](#部署示例)
+- [快速体验](#fire-快速体验)
 - [未来计划](#construction-未来计划)
-- [开源协议](#page_with_curl-开源协议)
+- [致谢](#link-致谢)
+- [声明](#page_with_curl-声明)
 
 ----
 
@@ -67,6 +65,11 @@ pip install -r requirements.txt
 python .\main.py
 ```
 
+## :fire: 快速体验
+欢迎扫码入群，解锁EduChat全部能力，如有疑问，欢迎添加小助手微信（situerleng）为您解答。
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/wxGroup.png)
+
+
 ## :construction: 未来计划
 
 初代EcnuBot主要集成EduChat教育大模型以及其他各大模型支持，随着面向群体以及用户的需求的扩大，从应用性等角度考虑，未来亦着手建设以下功能：
@@ -75,6 +78,7 @@ python .\main.py
 * [ ] 学术解析等功能
 * [ ] 文件内容识别处理、总结等功能
 * [ ] 自定义角色等功能
+* [ ] 插件支持等
 * [ ] 更多大模型接入
 * [ ] 小程序、web端、手机端支持等多端应用
 * [ ] ...... 
@@ -88,3 +92,6 @@ python .\main.py
 - [whisper](https://github.com/openai/whisper) openai提供语音识别支持
 - [awesome-chatgpt](https://github.com/uhub/awesome-chatgpt) 提供的开源技术支持
 
+## :page_with_curl: 声明
+
+本项目仅供研究目的使用，项目开发者对于使用本项目（包括但不限于数据、模型、代码等）所导致的任何危害或损失不承担责任。
