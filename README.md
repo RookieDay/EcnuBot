@@ -13,6 +13,7 @@
   - [下载安装](#下载安装)
   - [部署示例](#部署示例)
 - [快速体验](#fire-快速体验)
+- [部分功能展示](#fountain_pen-部分功能展示)
 - [未来计划](#construction-未来计划)
 - [致谢](#link-致谢)
 - [声明](#page_with_curl-声明)
@@ -69,6 +70,26 @@ python .\main.py
 欢迎扫码入群，解锁EduChat全部能力，如有疑问，欢迎添加小助手微信（situerleng）为您解答。
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/wxGroup.png)
 
+
+## :fountain_pen: 部分功能展示
+
+<details><summary><b>能力菜单</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/menu.png)
+
+<details><summary><b>文生图</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/txt2image.png)
+
+<details><summary><b>ECNU 情感</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuEmotion.png)
+
+<details><summary><b>语音识别</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/yuyin.png)
+
+<details><summary><b>加群</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/ingrp.png)
+
+<details><summary><b>其他大模型支持等</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/otherModel.png)
 
 ## :construction: 未来计划
 
