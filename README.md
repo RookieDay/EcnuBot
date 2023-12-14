@@ -61,6 +61,7 @@ pip install -r requirements.txt
 
 <details><summary><b>AutoDL配置</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/AutoDL.png)
+</details>
 
 3. 运行，启动服务
 
@@ -77,21 +78,27 @@ python .\main.py
 
 <details><summary><b>能力菜单</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/menu.png)
+</details>
 
 <details><summary><b>文生图</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/txt2image.png)
+</details>
 
 <details><summary><b>ECNU 情感</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuEmotion.png)
+</details>
 
 <details><summary><b>语音识别</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/yuyin.png)
+</details>
 
 <details><summary><b>加群</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/ingrp.png)
+</details>
 
 <details><summary><b>其他大模型支持等</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/otherModel.png)
+</details>
 
 ## :construction: 未来计划
 
