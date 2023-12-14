@@ -58,6 +58,22 @@ pip install -r requirements.txt
 1. 按照config.py文件备注，修改相关配置
 
 2. [AutoDL](https://www.autodl.com/)服务端部署EduChat大模型，部署依托于[EduChat](https://github.com/THUDM/ChatGLM3) ，代码魔改已放置demo文件夹，可在服务端替换，如有疑问请私信EcnuBot。
+```bash
+# 两张显卡加载模型
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+
+model_path = "/root/autodl-tmp/educhat-sft-002-13b-baichuan"
+config = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+with init_empty_weights():
+    model = AutoModelForCausalLM.from_config(
+        config, torch_dtype=torch.float16, trust_remote_code=True
+    )
+model.tie_weights()
+model = load_checkpoint_and_dispatch(
+    model, model_path, device_map="auto", dtype=torch.float16
+)
+```
 
 <details><summary><b>AutoDL配置</b></summary>
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/AutoDL.png)
