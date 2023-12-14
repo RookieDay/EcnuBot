@@ -6,7 +6,6 @@
 #### 华东师范大学专属微信机器人,接入华东师范大学研发教育领域对话大模型[EduChat](https://github.com/THUDM/ChatGLM3) ，同时支持[ChatGLM3](https://github.com/THUDM/ChatGLM3)、[qwen-max](https://github.com/QwenLM/Qwen)等多种大模型支持，支持对开放问答、作文批改、启发式教学和情感支持等教育特色功能以及各大模型能力。
 
 ## 目录
-
 - [功能介绍](#spiral_notepad-功能介绍)
 - [本地部署](#robot-本地部署)
   - [硬件要求](#硬件要求)
@@ -58,7 +57,10 @@ pip install -r requirements.txt
 ### 使用示例
 1. 按照config.py文件备注，修改相关配置
 
-2. [AutoDL](https://www.autodl.com/)服务端部署EduChat大模型，部署依托于[EduChat](https://github.com/THUDM/ChatGLM3) ，代码魔改已放置demo文件夹，可在服务端替换，如有疑问请私信EcnuBot
+2. [AutoDL](https://www.autodl.com/)服务端部署EduChat大模型，部署依托于[EduChat](https://github.com/THUDM/ChatGLM3) ，代码魔改已放置demo文件夹，可在服务端替换，如有疑问请私信EcnuBot。
+
+<details><summary><b>AutoDL配置</b></summary>
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/AutoDL.png)
 
 3. 运行，启动服务
 
@@ -95,6 +97,7 @@ python .\main.py
 
 初代EcnuBot主要集成EduChat教育大模型以及其他各大模型支持，随着面向群体以及用户的需求的扩大，从应用性等角度考虑，未来亦着手建设以下功能：
 
+**🖊 支持**  
 * [ ] Mac版部署支持
 * [ ] 学术解析等功能
 * [ ] 文件内容识别处理、总结等功能
