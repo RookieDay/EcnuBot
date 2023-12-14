@@ -2,7 +2,7 @@ import os
 import time
 import pandas as pd
 
-file_name = "user_data.csv"
+file_name = "user_QA.csv"
 
 async def storge_data(from_wxid, text_prompt, response, local_time):
     if not os.path.exists(file_name):
