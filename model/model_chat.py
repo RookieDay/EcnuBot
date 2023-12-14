@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
+import time
 import openai
 import requests
-from utils import config
+import asyncio                  
+from utils import config, user_data
 
 import dashscope
 
@@ -69,6 +71,8 @@ class Model_list:
             self.tongyi_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
         except:
             print(response)
             response = "任务存在问题"
@@ -99,6 +103,8 @@ class Model_list:
             self.tongyi_chatglm3_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
         except:
             response = "任务存在问题"
         return response
@@ -135,7 +141,8 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
         except:
             print(response)
             response = "任务存在问题"
@@ -173,7 +180,8 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
         except:
             print(response)
             response = "任务存在问题"
@@ -203,6 +211,8 @@ class Model_list:
             self.ecnu_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
         except:
             print(response)
             response = "任务存在问题"
@@ -230,6 +240,9 @@ class Model_list:
             self.thudm_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            time.sleep(1)
+
         except:
             print(response)
             response = "任务存在问题"
