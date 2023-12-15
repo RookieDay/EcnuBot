@@ -2,8 +2,8 @@ config = {
     # 图片
     "file_path": "D:/@bigdl/0#Ecnu_Chat/EcnuBot/txt2image",  # 图片等文件的保存目录
     # wechat
-    "master_wxid": "situerleng",  # 机器人主人的微信wxid号
-    "room_wxid": "",  # 主营的微信群wxid号
+    "master_wxid": "",  # 机器人主人的微信wxid号
+    "room_wxid": "45029388091@chatroom",  # 主营的微信群wxid号
     # 文心
     "wenxin_ak": "",  # 文心大模型的ak
     "wenxin_sk": "",  # 文心大模型的sk
@@ -11,7 +11,7 @@ config = {
     "qianfan_url": "https://aip.baidubce.com/oauth/2.0/token",
     "qianfan_img": "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl?access_token=",
     "qianfan_api": "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/qianfan_chinese_llama_2_13b?access_token=",
-    "qianfan_ak": "",
+    "qianfan_ak": "NQpKGaGmBovRtnBbLK1kOfdu",
     "qianfan_sk": "",
     # 阿里灵积 通义大模型
     "dashscope_key": "sk-",

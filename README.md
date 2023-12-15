@@ -3,7 +3,7 @@
 <a href="" target="_blank"><img src="https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuBot.png" alt="EcnuBot" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
 </p>
 
-#### 华东师范大学专属智能客服,接入华东师范大学研发教育领域对话大模型[EduChat](https://github.com/THUDM/ChatGLM3) ，同时支持[ChatGLM3](https://github.com/THUDM/ChatGLM3)、[qwen-max](https://github.com/QwenLM/Qwen)等多种大模型支持，支持对开放问答、作文批改、启发式教学和情感支持等教育特色功能以及各大模型能力。
+#### 华东师范大学专属智能客服，接入华东师范大学研发教育领域对话大模型[EduChat](https://github.com/THUDM/ChatGLM3) ，同时支持[ChatGLM3](https://github.com/THUDM/ChatGLM3)、[qwen-max](https://github.com/QwenLM/Qwen)等多种大模型支持，支持对开放问答、作文批改、启发式教学和情感支持等教育特色功能以及各大模型能力。
 
 ## 目录
 - [功能介绍](#spiral_notepad-功能介绍)
@@ -147,6 +147,7 @@ python .\main.py
 * [ ] 自定义角色等功能
 * [ ] 插件支持等
 * [ ] 数据存储优化等
+* [ ] 低成本部署等（模型量化、CPU部署）
 * [ ] 更多大模型接入
 * [ ] 小程序、web端、手机端支持等多端应用
 * [ ] ...... 

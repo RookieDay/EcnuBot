@@ -42,6 +42,7 @@ class Model_list:
 
     def qianwen(self, text_prompt, from_wxid):
         # 通义大模型qwen-max
+        model_name = 'qwen-max'
         try:
             if from_wxid in self.tongyi_data:
                 self.tongyi_data[from_wxid]["messages"].append(
@@ -71,7 +72,7 @@ class Model_list:
             self.tongyi_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
             print(response)
@@ -81,6 +82,7 @@ class Model_list:
     def qianwen_chatgml3(self, text_prompt, from_wxid):
         # 通义大模型服务 ChatGLM3
         # qq.com
+        model_name = "chatglm3-6b"
         try:
             if from_wxid in self.tongyi_data:
                 self.tongyi_chatglm3_data[from_wxid]["messages"].append(
@@ -103,7 +105,7 @@ class Model_list:
             self.tongyi_chatglm3_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
             response = "任务存在问题"
@@ -111,6 +113,7 @@ class Model_list:
 
     def qianfan(self, text_prompt, from_wxid):
         # 百度千帆大模型
+        model_name = "qianfan_chinese_llama_2_13b"
         try:
             token_url = config.config["qianfan_url"]
             API_KEY = config.config["qianfan_ak"]
@@ -141,7 +144,7 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
             print(response)
@@ -150,6 +153,7 @@ class Model_list:
 
     def qianfan_image(self, text_prompt, from_wxid):
         # 百度千帆大模型
+        model_name = "Stable-diffusion-XL"
         try:
             token_url = config.config["qianfan_url"]
             API_KEY = config.config["qianfan_ak"]
@@ -180,7 +184,7 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
             print(response)
@@ -190,6 +194,7 @@ class Model_list:
     def ecnu_chat(self, quest, text_prompt, from_wxid):
         # 该模型部署到了服务器,可远程调用,备选
         # ECNU educhat大模型
+        model_name = "EduChat"
         try:
             url = "http://127.0.0.1:8001/chat"
             if from_wxid in self.ecnu_data:
@@ -211,7 +216,7 @@ class Model_list:
             self.ecnu_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
             print(response)
@@ -221,6 +226,7 @@ class Model_list:
     def thudm_chat(self, text_prompt, from_wxid):
         # 该模型部署到了服务器,可远程调用,备选
         # 模型 THUDM/ChatGLM2-6b
+        model_name = "ChatGLM2"
         try:
             openai.api_base = "http://127.0.0.1:8002/v1"
             openai.api_key = "none"
@@ -240,7 +246,7 @@ class Model_list:
             self.thudm_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())))
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
 
         except:

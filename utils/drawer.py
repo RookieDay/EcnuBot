@@ -1,7 +1,7 @@
 # 以下部分代码摘录自：https://github.com/CrazyBoyM/nonebot-plugin-drawer/blob/main/nonebot_plugin_drawer/drawer.py
 import os
 import json
-from pydantic import BaseSettings
+from pydantic.v1 import BaseSettings
 import base64
 import string
 import random

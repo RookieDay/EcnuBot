@@ -8,6 +8,7 @@ from .model_chat import Model_list, user_QA
 
 # ecnu chat
 bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
+bot_hi_newFri = f"您好，我是EcnuBot，您的AI小伙伴。您可以私信EcnuBot发送“加群”，加入EcnuBot体验交流群。"
 models = Model_list()
 
 
@@ -259,9 +260,7 @@ def voice_msg(wechat_instance, message, whisper_mp3):
 
 
 def group_msg(wechat_instance, message):
-    data = message["data"]
     type_wx = message["type"]
-
     if type_wx == 11098:
         data = message["data"]
         member_ = data["member_list"]
@@ -271,13 +270,13 @@ def group_msg(wechat_instance, message):
         room_wxid_ = data["room_wxid"]
         time.sleep(0.5)
         try:
-            main_room_wxid = config.config("room_wxid")
+            main_room_wxid = config.config["room_wxid"]
             if room_wxid_ == main_room_wxid:
                 sleep_time = random.randint(0, 4)
                 time.sleep(sleep_time)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid_,
-                    content="{$@},欢迎加入EcnuBot交流群！详细内容可看群公告.\n\n（温馨提示：@EcnuBot回复“菜单”可解锁EcnuBot全部能力.）\n",
+                    content="{$@},欢迎加入EcnuBot交流群！详细内容可看群公告.\n\n温馨提示：@EcnuBot回复“菜单”可解锁EcnuBot全部能力。",
                     at_list=member,
                 )
         except:
@@ -293,8 +292,30 @@ def addFriend_msg(wechat_instance, message):
     scene = dom.documentElement.getAttribute("scene")
     # 自动同意好友申请
     wechat_instance.accept_friend_request(encryptusername, ticket, int(scene))
+    
+    from_wxid = dom.documentElement.getAttribute("fromusername")
+    time.sleep(1)
+    wechat_instance.send_text(to_wxid=from_wxid, content=bot_hi_newFri)
 
 
 def addContact_msg(wechat_instance, message):
-    data = message["data"]
-    wechat_instance.send_text(to_wxid=data["wxid"], content=bot_hi)
+    type_wx = message["type"]
+
+    if type_wx == 11098:
+        data = message["data"]
+        member_ = data["member_list"]
+        member_wxid = data["member_list"][0]["wxid"]
+        member = []
+        member.append(member_wxid)
+        room_wxid_ = data["room_wxid"]
+        time.sleep(0.5)
+        main_room_wxid = config.config["room_wxid"]
+
+        if room_wxid_ == main_room_wxid:
+            sleep_time = random.randint(0, 4)
+            time.sleep(sleep_time)
+            wechat_instance.send_room_at_msg(
+                to_wxid=room_wxid_,
+                content="{$@},欢迎加入EcnuBot交流群！详细内容可看群公告.\n\n温馨提示：@EcnuBot回复“菜单”可解锁EcnuBot全部能力。",
+                at_list=member,
+            )
