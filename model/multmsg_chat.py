@@ -7,7 +7,7 @@ from utils import config, drawer
 from .model_chat import Model_list, user_QA
 
 # ecnu chat
-bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 1girl moonlit sky, auspicious clouds, classical patterns...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
+bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
 models = Model_list()
 
 
