@@ -54,7 +54,7 @@ def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
     multmsg_chat.group_msg(wechat_instance, message)
 
 
-# 以下是为了让程序不结束
+# 让程序不结束
 try:
     while True:
         time.sleep(0.5)

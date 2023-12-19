@@ -3,10 +3,10 @@ config = {
     "file_path": "D:/@bigdl/0#Ecnu_Chat/EcnuBot/txt2image",  # 图片等文件的保存目录
     # wechat
     "master_wxid": "",  # 机器人主人的微信wxid号
-    "room_wxid": "45029388091@chatroom",  # 主营的微信群wxid号
+    "room_wxid": "@chatroom",  # 主营的微信群wxid号
     # 文心
     "wenxin_ak": "",  # 文心大模型的ak
-    "wenxin_sk": "Hfu87yNc86MIXHNxyGpVgWngaf15NQfq",  # 文心大模型的sk
+    "wenxin_sk": "",  # 文心大模型的sk
     # 千帆大模型
     "qianfan_url": "https://aip.baidubce.com/oauth/2.0/token",
     "qianfan_img": "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl?access_token=",

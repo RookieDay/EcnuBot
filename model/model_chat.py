@@ -100,8 +100,8 @@ class Model_list:
                 model="chatglm3-6b",
                 messages=self.tongyi_chatglm3_data[from_wxid]["messages"],
             )
-            print(response)
-            response = response["output"]["text"]
+            # chatglm3 返回的值 前面有空行，特此替换掉
+            response = response["output"]["text"][2:]
             self.tongyi_chatglm3_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
@@ -147,8 +147,8 @@ class Model_list:
             asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
-            print(response)
             response = "任务存在问题"
+            print(response)
         return response
 
     def qianfan_image(self, text_prompt, from_wxid):
@@ -219,8 +219,8 @@ class Model_list:
             asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
             time.sleep(1)
         except:
-            print(response)
             response = "任务存在问题"
+            print(response)
         return response
 
     def thudm_chat(self, text_prompt, from_wxid):
@@ -250,6 +250,6 @@ class Model_list:
             time.sleep(1)
 
         except:
-            print(response)
             response = "任务存在问题"
+            print(response)
         return response

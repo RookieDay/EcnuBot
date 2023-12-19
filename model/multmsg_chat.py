@@ -17,12 +17,14 @@ def scenes_msg(wechat_instance, message):
     from_wxid = data["from_wxid"]
     self_wxid = wechat_instance.get_login_info()["wxid"]
     room_wxid = data["room_wxid"]
-    base_prompt = data["msg"].strip()
+    input_prompt = data["msg"].strip()
     nickname = wechat_instance.get_self_info()["nickname"]
 
-    # 判断消息不是自己发的并且不是群消息时，回复对方
+    # 判断消息不是自己发的&不是群消息->回复对方
     if from_wxid != self_wxid and not room_wxid:
-        if base_prompt == "加群":
+        print("input_prompt")
+        print(input_prompt)
+        if input_prompt == "加群":
             try:
                 member = []
                 room_wxid = config.config["room_wxid"]
@@ -36,10 +38,10 @@ def scenes_msg(wechat_instance, message):
             except:
                 wechat_instance.send_text(to_wxid=from_wxid, content=f"任务存在问题，请联系作者。")
 
-        elif base_prompt.split(" ")[0] == "菜单":
+        elif input_prompt.split(" ")[0] == "菜单":
             wechat_instance.send_text(to_wxid=from_wxid, content=bot_hi)
 
-        elif base_prompt.split(" ")[0] == "绘画":
+        elif input_prompt.split(" ")[0] == "绘画":
             text_prompt = data["msg"].split(" ")[1]
             wechat_instance.send_text(to_wxid=from_wxid, content=f"正在作画，请您耐心等待！")
             try:
@@ -56,49 +58,49 @@ def scenes_msg(wechat_instance, message):
             except:
                 wechat_instance.send_text(to_wxid=from_wxid, content="文生图功能暂时关闭。")
 
-        elif base_prompt.split(" ")[0] == "千问":
-            text_prompt = base_prompt.replace("千问 ", "")
+        elif input_prompt.split(" ")[0] == "千问":
+            text_prompt = input_prompt.replace("千问 ", "")
             response = models.qianwen(text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【通义千问大模型回复】" + "\n" + response
             )
 
-        elif base_prompt.split(" ")[0] == "ChatGLM3":
-            text_prompt = base_prompt.replace("ChatGLM3", "")
+        elif input_prompt.split(" ")[0] == "ChatGLM3":
+            text_prompt = input_prompt.replace("ChatGLM3", "")
             response = models.qianwen_chatgml3(text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【ChatGLM3-6B大模型回复】" + "\n" + response
             )
 
-        elif base_prompt.split(" ")[0] == "千帆":
-            text_prompt = base_prompt.replace("千帆 ", "")
+        elif input_prompt.split(" ")[0] == "千帆":
+            text_prompt = input_prompt.replace("千帆 ", "")
             response = models.qianfan(text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【百度千帆大模型回复】" + "\n" + response
             )
 
-        elif base_prompt.split(" ")[0] == "ECNU":
+        elif input_prompt.split(" ")[0] == "ECNU":
             quest = ""
             for question in user_QA:
-                if question in base_prompt:
+                if question in input_prompt:
                     quest = question
                     break
-            # text_prompt = base_prompt.replace('ECNU ', '')
-            text_prompt = base_prompt.replace(quest, "").strip()
+            # text_prompt = input_prompt.replace('ECNU ', '')
+            text_prompt = input_prompt.replace(quest, "").strip()
             response = models.ecnu_chat(quest, text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【ECNU大模型回复】" + "\n" + response
             )
 
-        elif base_prompt.split(" ")[0] == "清华":
-            text_prompt = base_prompt.replace("清华 ", "")
+        elif input_prompt.split(" ")[0] == "清华":
+            text_prompt = input_prompt.replace("清华 ", "")
             wechat_instance.send_text(to_wxid=from_wxid, content="正在回答请您稍等！")
             response = models.thudm_chat(text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【ChatGLM2大模型回复】" + "\n" + response
             )
         else:
-            text_prompt = base_prompt
+            text_prompt = input_prompt
             response = models.qianfan(text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【百度千帆大模型回复】" + "\n" + response
@@ -106,17 +108,17 @@ def scenes_msg(wechat_instance, message):
 
     # 群聊
     elif from_wxid != self_wxid and room_wxid and "@" + nickname in data["msg"]:
+        member = []
         at_nickname = "@" + nickname
         black_wxid = config.config["black_wxid"]
-        member = []
         member.append(data["from_wxid"])
         room_wxid = data["room_wxid"]
         if "\u2005" in data["msg"].replace(at_nickname, ""):
-            base_prompt = data["msg"].replace(at_nickname + "\u2005", "").strip()
+            input_prompt = data["msg"].replace(at_nickname + "\u2005", "").strip()
         elif at_nickname + " " in data["msg"]:
-            base_prompt = data["msg"].replace(at_nickname + " ", "").strip()
+            input_prompt = data["msg"].replace(at_nickname + " ", "").strip()
         else:
-            base_prompt = data["msg"].replace(at_nickname, "").strip()
+            input_prompt = data["msg"].replace(at_nickname, "").strip()
 
         if data["from_wxid"] not in black_wxid:
             if "菜单" in data["msg"]:
@@ -127,11 +129,11 @@ def scenes_msg(wechat_instance, message):
                     at_list=member,
                 )
 
-            elif base_prompt.split(" ")[0] == "绘画":
+            elif input_prompt.split(" ")[0] == "绘画":
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid, content="{$@} 好哦,请您稍等！", at_list=member
                 )
-                text_prompt = base_prompt.split(" ")[1]
+                text_prompt = input_prompt.split(" ")[1]
                 try:
                     file_path = config.config["file_path"]
                     print("................................")
@@ -160,8 +162,8 @@ def scenes_msg(wechat_instance, message):
                         to_wxid=room_wxid, content="{$@} " + "文生图功能暂时关闭", at_list=member
                     )
 
-            elif base_prompt.split(" ")[0] == "千问":
-                text_prompt = base_prompt.replace("千问 ", "")
+            elif input_prompt.split(" ")[0] == "千问":
+                text_prompt = input_prompt.replace("千问 ", "")
                 response = models.qianwen(text_prompt, from_wxid)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid,
@@ -169,8 +171,8 @@ def scenes_msg(wechat_instance, message):
                     at_list=member,
                 )
 
-            elif base_prompt.split(" ")[0] == "ChatGLM3":
-                text_prompt = base_prompt.replace("ChatGLM3", "")
+            elif input_prompt.split(" ")[0] == "ChatGLM3":
+                text_prompt = input_prompt.replace("ChatGLM3", "")
                 response = models.qianwen_chatgml3(text_prompt, from_wxid)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid,
@@ -178,8 +180,8 @@ def scenes_msg(wechat_instance, message):
                     at_list=member,
                 )
 
-            elif base_prompt.split(" ")[0] == "千帆":
-                text_prompt = base_prompt.replace("千帆 ", "")
+            elif input_prompt.split(" ")[0] == "千帆":
+                text_prompt = input_prompt.replace("千帆 ", "")
                 response = models.qianfan(text_prompt, from_wxid)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid,
@@ -187,14 +189,14 @@ def scenes_msg(wechat_instance, message):
                     at_list=member,
                 )
 
-            elif base_prompt.split(" ")[0] == "ECNU":
+            elif input_prompt.split(" ")[0] == "ECNU":
                 quest = ""
                 for question in user_QA:
-                    if question in base_prompt:
+                    if question in input_prompt:
                         quest = question
                         break
-                # text_prompt = base_prompt.replace('ECNU ', '')
-                text_prompt = base_prompt.replace(quest, "").strip()
+                # text_prompt = input_prompt.replace('ECNU ', '')
+                text_prompt = input_prompt.replace(quest, "").strip()
                 response = models.ecnu_chat(quest, text_prompt, from_wxid)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid,
@@ -202,8 +204,8 @@ def scenes_msg(wechat_instance, message):
                     at_list=member,
                 )
 
-            elif base_prompt.split(" ")[0] == "清华":
-                text_prompt = base_prompt.replace("清华 ", "")
+            elif input_prompt.split(" ")[0] == "清华":
+                text_prompt = input_prompt.replace("清华 ", "")
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid, content="{$@} 正在回答，请您稍等！", at_list=member
                 )
@@ -215,7 +217,7 @@ def scenes_msg(wechat_instance, message):
                 )
 
             else:
-                text_prompt = base_prompt
+                text_prompt = input_prompt
                 response = models.qianfan(text_prompt, from_wxid)
                 wechat_instance.send_room_at_msg(
                     to_wxid=room_wxid,
@@ -263,7 +265,6 @@ def group_msg(wechat_instance, message):
     type_wx = message["type"]
     if type_wx == 11098:
         data = message["data"]
-        member_ = data["member_list"]
         member_wxid = data["member_list"][0]["wxid"]
         member = []
         member.append(member_wxid)
@@ -292,7 +293,7 @@ def addFriend_msg(wechat_instance, message):
     scene = dom.documentElement.getAttribute("scene")
     # 自动同意好友申请
     wechat_instance.accept_friend_request(encryptusername, ticket, int(scene))
-    
+
     from_wxid = dom.documentElement.getAttribute("fromusername")
     time.sleep(1)
     wechat_instance.send_text(to_wxid=from_wxid, content=bot_hi_newFri)
@@ -302,10 +303,9 @@ def addContact_msg(wechat_instance, message):
     type_wx = message["type"]
 
     if type_wx == 11098:
-        data = message["data"]
-        member_ = data["member_list"]
-        member_wxid = data["member_list"][0]["wxid"]
         member = []
+        data = message["data"]
+        member_wxid = data["member_list"][0]["wxid"]
         member.append(member_wxid)
         room_wxid_ = data["room_wxid"]
         time.sleep(0.5)
