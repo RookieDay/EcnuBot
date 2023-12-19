@@ -22,6 +22,7 @@
 ## :spiral_notepad: 功能介绍
 
 **⚡ 支持**   
+* [x] web端
 * [x] 自动问答
 * [x] 关键词触发回复
 * [x] 私信语音识别答复
@@ -40,6 +41,7 @@
 ### 硬件要求
 
 1. 本项目目前仅支持在windows上运行，由于本人电脑配置较低，所以将EduChat大模型部署至远程服务器，需开通[AutoDL](https://www.autodl.com/)账号，申请RTX 3090(24GB) * 2卡 资源
+2. 本项目已支持web端体验，还在不断完善中，私戳[EcnuBot_web](https://github.com/RookieDay/EcnuBot_web)
 
 ### 下载安装
 1. 安装对应版本[PC端](https://git.openi.org.cn/attachments/3bf60134-9d9d-437a-acf4-bfcc50521997?type=0)
