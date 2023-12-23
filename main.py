@@ -41,6 +41,11 @@ def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
 def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
     multmsg_chat.scenes_msg(wechat_instance, message)
 
+# 注册消息回调 文件消息通知
+@wechat.msg_register(ntchat.MT_RECV_FILE_MSG)
+def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
+    multmsg_chat.file_msg(wechat_instance, message)
+
 
 # 注册消息回调 语音消息通知
 @wechat.msg_register(ntchat.MT_RECV_VOICE_MSG)

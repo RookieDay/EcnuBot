@@ -5,25 +5,25 @@ import openai
 import requests
 import asyncio                  
 from utils import config, user_data
-
+import base64
 import dashscope
+import os
 
 dashscope.api_key = config.config["dashscope_key"]
 
 # ecnu chat
 user_QA = [
-    "ECNU 情感 搜索 inner",
-    "ECNU 情感 搜索",
-    "ECNU 问答 搜索",
-    "ECNU 教学 搜索",
-    "ECNU 情感 inner",
+    "情感 搜索 inner",
+    "情感 搜索",
+    "问答 搜索",
+    "教学 搜索",
+    "情感 inner",
     "ECNU 搜索",
-    "ECNU 情感",
-    "ECNU 教学",
-    "ECNU 问答",
+    "情感",
+    "教学",
+    "问答",
     "ECNU",
 ]
-
 
 class Model_list:
     def __init__(
@@ -33,12 +33,14 @@ class Model_list:
         qianfan_data={},
         tongyi_data={},
         tongyi_chatglm3_data={},
+        article_chatglm3_data={},
     ):
         self.ecnu_data = ecnu_data
         self.thudm_data = thudm_data
         self.qianfan_data = qianfan_data
         self.tongyi_data = tongyi_data
         self.tongyi_chatglm3_data = tongyi_chatglm3_data
+        self.article_chatglm3_data = article_chatglm3_data
 
     def qianwen(self, text_prompt, from_wxid):
         # 通义大模型qwen-max
@@ -253,3 +255,79 @@ class Model_list:
             response = "任务存在问题"
             print(response)
         return response
+
+    
+    def knowledge_chat(self, text_prompt, from_wxid):
+        model_name = "article_QA"
+        try:   
+            if text_prompt == "结束对话":
+                self.article_chatglm3_data = {}
+                return ""
+            url = "http://127.0.0.1:8001/chat_article"
+            print('kkkkkkkkkkkkkkkkkkkkkk')
+            print(self.article_chatglm3_data)
+            if from_wxid in self.article_chatglm3_data and "messages" in self.article_chatglm3_data[from_wxid]:
+                self.article_chatglm3_data[from_wxid]["messages"].append(
+                    {"role": "user", "content": text_prompt}
+                )
+
+            else:
+                self.article_chatglm3_data[from_wxid]["messages"] = [{"role": "user", "content": text_prompt}]
+            
+            print(self.article_chatglm3_data)
+
+            payload = json.dumps(self.article_chatglm3_data[from_wxid])
+
+            headers = {"Content-Type": "application/json"}
+            # 发送请求
+            response = requests.post(url, data=payload, headers=headers)
+            response = response.json()["response"]
+            self.article_chatglm3_data[from_wxid]["messages"].append(
+                {"role": "assistant", "content": response}
+            )
+            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            time.sleep(1)
+        except:
+            response = "任务存在问题"
+            print(response)
+        return response
+
+    def knowledge_generate(self, data, from_wxid):
+        file_path = data['file']
+        try:
+            file_name = os.path.split(file_path)[1].split('.')[0]
+            file_type = os.path.splitext(file_path)[1]
+            print('filename', file_name)
+            print('file_type', file_type)
+            with open(file_path, "rb") as p_file:
+                encode_file = base64.b64encode(p_file.read())
+                encode_file = encode_file.decode("utf-8")
+
+            params = {
+                "kb_name": from_wxid,
+                "file_name": file_name,
+                "encode_file": encode_file,
+                "file_type": file_type
+            }
+            url = "http://127.0.0.1:8001/chat_knowledge"
+            print("知识库创建中...")
+            headers = {"Content-Type": "application/json"}
+            payload = json.dumps(params)
+            response = requests.post(url, data=payload, headers=headers)
+            resp = response.json()
+            response = resp["response"]
+
+            self.article_chatglm3_data = {}
+            self.article_chatglm3_data[from_wxid] = {
+                "file_hash": resp['file_hash'],
+                "kb_name": from_wxid
+            }
+
+            print('response.......')
+            print(response)
+            return response
+            
+        except:
+            print("Failed to connect. Status code:", response.status_code)
+            print("知识库创建失败")
+            return "抱歉，摘要生成失败"

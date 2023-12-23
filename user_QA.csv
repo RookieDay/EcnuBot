@@ -45,3 +45,94 @@ wxid_4j0mvisfvfzt12, 1+1,"
 wxid_4j0mvisfvfzt12, 1+1,"
  1+1=2",2023-12-19 22:00:04,chatglm3-6b
 wxid_4j0mvisfvfzt12, 1+1,1+1=2,2023-12-19 22:00:44,chatglm3-6b
+wxid_rpwam7p2asw822,API是什么,API是Application Programming Interface的缩写，中文翻译为应用程序编程接口。它是一种让不同程序之间进行交互和通信的规范和框架。API通常提供了一组函数和接口，用于开发和运行应用程序。在计算机科学中，API经常被用于不同编程语言之间的互操作，使程序能够协同工作。例如，在Python中，您需要开发一个数字的指定次方的函数时，可以使用pow函数，而pow函数就是Python提供的API之一。,2023-12-23 12:18:27,article_QA
+wxid_rpwam7p2asw822,API 和函数的关系是什么,"通常在说到 API 时，有几个地方经常会出现。在程序语言中，比如在 Python 语言中，当你需要算一个数的 N 次方时，你会用 pow(4,2) 来表示 4 的 2 次方。而这样的 API，就是语言为你提供的 API。这样的 API 的文档，通常在语言官方的文档中可以找到。
+
+出现在安装的依赖中。上面说的 pow 函数，是 Python 自带的函数。但如果要完成更复杂的操作，通常你需要安装一些依赖。比如说，如果需要请求 HTTP 服务的话，你可能会用到 requests 这个库。而这个库它有自己的 API，而这样的库的文档，一般在对应的官网或者github 页面上可以找到。
+
+第三方服务以网络形式请求出现。这是本文将会介绍的最主要的形式。第三方服务以网络形式提供 API，基本构成了现代互联网的整个基础，下一节我们详细展开说明为什么 API 这么重要。
+
+为什么需要 API？在之前一篇文章中，我们深入地讲了如何设计 API。然而直到写到很后面，我才意识到我还没有认真地讲过到底 API 到底是什么。与 1000 个读者有 1000 个哈姆雷特类似，即使你让一个经验非常丰富的程序员给 API 一个定义，大概率他也会用一个例子来说明。比如说：“哦 API 呀，你去看下微博的 API 文档就知道 API 是什么了。”但实际上，这只是在说明 X 是 API 而非 API 是什么。要理解 API 的定义，我们先把 API 的英文扩写祭出来：API=ApplicationProgrammingInterface API 的英文即 ApplicationProgrammingInterface 首字母的缩写。不要被这么长的单词吓到，直译过来的意思就是：程序之间的接口。我更倾向于把 API 理解为，程序之间的合约。
+
+API 和函数的关系是什么。确实，很多情况下，如果你在直接使用语言提供的 API 的话，API 的形式可能就是一个函数。但其实不然，因为还有很多其它的情况，API 不一定是一个函数，有可能是一个类，一个 HTTP 网络请求（最主要的 API，请见下文）等。API 的主要形式有哪些？",2023-12-23 12:20:01,article_QA
+wxid_rpwam7p2asw822,api是什么,"API是Application Programming Interface的缩写，它是一种编程接口，提供给开发者和用户以便于编写代码和和使用特定功能或服务的工具。API通常在应用程序编程语言中使用，例如在Python中，当你需要计算数的N次方时，你会使用pow(4, 2)来表示4的2次方。这样的API的文档通常在语言官方文档或第三方服务的网站上可以找到。API的主要形式包括函数、类和网络请求等。API的好处在于它让程序员之间可以轻松分工，而分工之后，用户只需要专注于提供业务逻辑，而无需了解复杂的细节。",2023-12-23 12:21:02,article_QA
+wxid_rpwam7p2asw822,api是什么,API是Application Programming Interface的缩写，中文翻译为应用程序编程接口。它是一种让不同软件之间进行交互的接口，可以让开发者方便地在自己的应用程序中使用第三方软件或服务的功能。API通常在应用程序编程语言中定义，可以让程序员使用该语言中提供的函数或类来完成特定的任务。API还可以以网络形式提供，供开发者通过网络请求调用。API的好处在于它可以让程序员之间轻松分工，让开发者专注于自己的业务，而不必了解细节。,2023-12-23 12:23:53,article_QA
+wxid_rpwam7p2asw822,api英文,"API stands for Application Programming Interface, which is a set of rules, protocols, and tools used for building software applications. It allows different software systems to communicate with each other by defining a common programming interface. 
+
+In modern software development, APIs have become an essential part of the software development life cycle. Many developers use APIs to interact with第三方 services, such as social media platforms, payment gateways, and cloud services. APIs allow developers to focus on their core business and let third-party services handle the complex tasks, such as data storage, security, and scalability. 
+
+APIs can take many forms, including RESTful APIs, SOAP-based APIs, and GraphQL. They typically communicate with clients using HTTP or other protocols. In addition, APIs can also be discovered and consumed by other software systems through APIs such as dependency injection, service locators, and command-line interface tools.",2023-12-23 12:25:05,article_QA
+wxid_rpwam7p2asw822,我刚刚问了什么问题,抱歉，您提供的信息无法让我明白您刚刚问了什么问题。请您提供更多上下文或详细描述您的问题，让我更好地帮助您。,2023-12-23 12:26:48,article_QA
+wxid_rpwam7p2asw822,这篇文章讲了什么,这篇文章讲了API，它是一种让程序之间进行交互的接口。API可以让程序员之间轻松分工，让他们专注于自己的业务，而不必了解细节。通过API，开发者可以使用第三方服务的功能，从而使自己的应用程序更加完整。API在现代互联网中非常重要，许多公司都开始提供自己的API，以吸引更多的开发者使用他们的服务。,2023-12-23 12:28:49,article_QA
+wxid_rpwam7p2asw822,请总结下这篇文章,这篇文章主要讨论了API（应用程序编程接口）的概念以及它在现代互联网中的重要性。文章提到，API可以让程序员之间轻松分工，让专人可以专心做专业的很多事情。通过API，开发者可以使用第三方服务的功能，从而使自己的应用程序更加完整。API在现代互联网中非常重要，许多公司都开始提供自己的API，以吸引更多的开发者使用他们的服务。,2023-12-23 12:29:22,article_QA
+wxid_rpwam7p2asw822,请对这篇文章总结三个要点,"1. API（应用程序编程接口）是一种让不同程序之间进行交互的接口。
+2. API可以让程序员之间轻松分工，让专人可以专注于自己的业务，而无需了解细节。
+3. API在现代互联网中非常重要，许多公司都开始提供自己的API，以吸引更多的开发者使用他们的服务。",2023-12-23 12:29:43,article_QA
+wxid_4j0mvisfvfzt12,这篇文章总结三个要点,这篇文章总结三个要点：介绍ModelScopeLibrary库的功能、快速使用指南以及ModelScope官方模型的实现。,2023-12-23 14:50:25,article_QA
+wxid_4j0mvisfvfzt12,这篇文章一句话总结,这篇文章介绍了一个名为ModelScopeLibrary的Python库，它提供了深度学习模型推理的相关功能，包括模型的训练和评估以及模型的导出等，旨在帮助用户快速方便地完成模型的推理、训练和评估等任务，具有很好的灵活性和可扩展性。,2023-12-23 14:51:41,article_QA
+wxid_4j0mvisfvfzt12,这篇文章提取五个关键词,"1. ModelScopeLibrary
+2. 深度学习模型
+3. 产品功能
+4. 快速使用指南
+5. 模型推理",2023-12-23 14:52:37,article_QA
+wxid_4j0mvisfvfzt12,这篇文章总结三个提问,"1.  ModelScopeLibrary 是一个用于深度学习模型推理的 Python 库，它提供了哪些产品功能？
+2. ModelScopeLibrary 提供了哪些深度学习框架？
+3. 如何快速使用 ModelScopeLibrary 实现模型推理、训练和评估？",2023-12-23 14:53:10,article_QA
+wxid_4j0mvisfvfzt12,请用三句话总结本篇文章,这篇文章介绍了一个名为ModelScopeLibrary的Python库，它提供了一系列功能齐全的模型实现，包括ModelScope官方模型的实现，以及用于推理、finetune等任务的预处理、后处理和效果评估等代码。通过调用library，用户可以轻松完成模型的推理、训练和评估等任务，也可以快速进行二次开发。目前library支持的深度学习框架包括Pytorch和Tensorflow，后续将持续更新拓展。,2023-12-23 15:23:01,article_QA
+wxid_4j0mvisfvfzt12,请提取这篇文章三个关键词,"1. ModelScopeLibrary
+2. 深度学习框架
+3. 模型推理",2023-12-23 15:23:33,article_QA
+wxid_4j0mvisfvfzt12,请使用三句话总结该文章,"该文章介绍了一个名为ModelScopeLibrary的Python库,它提供了深度学习和机器学习的相关功能,包括模型的训练和评估、模型推理等。文章详细介绍了ModelScopeLibrary的使用方法,包括如何创建特定任务的推理流程、如何指定数据集、如何进行模型训练和评估等。同时,文章还介绍了ModelScopeLibrary所支持的深度学习框架,包括PyTorch和Tensorflow。",2023-12-23 15:24:49,article_QA
+wxid_4j0mvisfvfzt12,请使用三句话总结这篇文章,本文介绍了一个名为ModelScopeLibrary的Python库，它提供了深度学习模型推理的相关功能，包括模型的训练和评估以及模型的导出等，可以方便地使用模型的推理、训练和评估等任务，适用于图像、自然语言处理、语音、多模态和科学等五个主要的AI领域，包括数十个应用场景。该库还提供了使用深度学习框架Pytorch和Tensorflow进行模型推理的方法，用户可以轻松地完成模型推理、训练和评估等任务，实现自己的创新想法。,2023-12-23 15:35:55,article_QA
+wxid_4j0mvisfvfzt12,请对该文章总结三个关键词,"1. ModelScopeLibrary
+2. 功能介绍
+3. 快速使用指南",2023-12-23 15:36:19,article_QA
+wxid_4j0mvisfvfzt12,请对该文章总结三个提问,"1. ModelScopeLibrary是什么？
+2. ModelScopeLibrary可以用来做什么？
+3. ModelScopeLibrary有什么特点？",2023-12-23 15:36:44,article_QA
+wxid_4j0mvisfvfzt12,请用30个字总结下该文章,本文介绍ModelScopeLibrary的产品功能、快速使用指南及使用特点。,2023-12-23 15:37:24,article_QA
+wxid_4j0mvisfvfzt12,请用30个字总结下该文章,本文介绍ModelScopeLibrary库，提供功能齐全的Python库，用于模型推理、训练和评估等任务，并提供简单易用的API和丰富的使用样例，方便用户快速使用。,2023-12-23 15:38:40,article_QA
+wxid_4j0mvisfvfzt12,请用15个字总结下该文章,本文介绍ModelScopeLibrary库，提供了一系列功能齐全的Python库，用于模型推理、训练和评估等任务，具有简单易用的API和丰富的使用样例，支持Pytorch和Tensorflow深度学习框架，提供了图像、自然语言处理、语音和多模态等领域的数十个任务。,2023-12-23 15:41:02,article_QA
+wxid_4j0mvisfvfzt12,请用五个关键词总结下该文章,本文主要讨论了研究生在论文写作中需要遵守的规范和要求，包括论文的内容要求、深度和难度、创新性、研究结论等。此外，还提到了研究生在选择论文研究方向和开展研究时需要注意的事项，包括调研报告、管理诊断等形式和特点，以及论文写作的指导与审阅过程指南。,2023-12-23 16:19:48,article_QA
+wxid_4j0mvisfvfzt12,请对本文章总结三个问题,本文章讨论了研究生在论文研究中需要遵守的规范和注意事项。首先，文章介绍了研究生论文水平评价的要求，包括实用性、详实性和严谨性等方面。其次，文章提到了研究生论文研究应该鼓励师生积极探索以调研报告、管理诊断等其他形式和特点开展论文研究。最后，文章列举了研究生论文研究需要满足的条件，包括保证论文总体要求和提供足够证据、鼓励创新、研究深入成果实用等。,2023-12-23 16:20:23,article_QA
+wxid_4j0mvisfvfzt12,请对该文章提取10个关键词,"1. 研究生论文
+2. 论文规范
+3. 实用性
+4. 调研报告
+5. 管理诊断
+6. 研究生论文研究
+7. 工程管理
+8. 论文水平
+9. 研究内容
+10. 结论",2023-12-23 16:20:56,article_QA
+wxid_4j0mvisfvfzt12,请对该文章总结10个问题,"1. 研究生论文需要遵守哪些规范和注意事项？
+2. 研究生论文研究可以采用哪些形式和特点？
+3. 工程管理专题研究类论文需要体现实用性、详实性和严谨性要求吗？
+4. 论文资料是否需要真实、典型和充分？
+5. 论文内容是否充实，工作量是否饱满，有一定深度和难度？
+6. 论文论点是否表述准确，论据概念清晰、逻辑严谨、结构合理、条理清楚？
+7. 工程管理设计类论文和工程管理案例研究类论文的写作指南是什么？
+8. 论文选题应该注意哪些问题？
+9. 论文写作过程中，应该注意哪些方面？
+10. 对研究生论文的指导、评阅和答辩环节，各培养单位是否有统一的规范文件要求？",2023-12-23 16:21:24,article_QA
+wxid_4j0mvisfvfzt12,请对该文章提取10个关键词,"1. 论文答辩
+2. 学位论文
+3. 答辩委员会
+4. 修改完善
+5. 签字确认
+6. 导师审核签名
+7. 最终定稿
+8. 电子版上传
+9. 纸质版提交
+10. 论文收藏机构",2023-12-23 16:22:50,article_QA
+wxid_4j0mvisfvfzt12,请对该文章总结10个问题,"1. 什么是论文答辩？
+2. 申请人在什么情况下可以进行论文答辩？
+3. 论文答辩委员会由谁组成？
+4. 申请人如何对论文进行修改和完善？
+5. 最终定稿的学位论文电子版应该怎么上传？
+6. 纸质版应该如何提交？
+7. 答辩委员会成员有什么建议和意见？
+8. 答辩应该在什么时候进行？
+9. 如果申请人未能在规定时间内进行答辩，会有什么后果？
+10. 本文的规定的效力如何？",2023-12-23 16:23:17,article_QA
+wxid_4j0mvisfvfzt12, 该文章是否和医药行业有关系,该文章主要讲述的是硕士研究生和博士研究生学位论文答辩的相关规定。其中，对于硕士研究生，答辩委员会应由3人或以上的校内外专家组成，成员应具有副教授或相当职称的专家组成，专业学位论文答辩委员会至少有1人为本专业实践领域的专家。对于博士研究生，答辩委员会应由3人或以上的校内外专家组成，成员应具有教授或相当职称的专家组成，专业学位论文答辩委员会至少有1为本专业实践领域的专家。,2023-12-23 16:24:14,article_QA

@@ -5,9 +5,11 @@ import time
 import xml.dom.minidom
 from utils import config, drawer
 from .model_chat import Model_list, user_QA
-
+import base64
+import requests
+import json
 # ecnu chat
-bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
+bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    问答 描述\n    教学 描述\n    情感 描述\n    情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
 bot_hi_newFri = f"您好，我是EcnuBot，您的AI小伙伴。您可以私信EcnuBot发送“加群”，加入EcnuBot体验交流群。"
 models = Model_list()
 
@@ -20,10 +22,10 @@ def scenes_msg(wechat_instance, message):
     input_prompt = data["msg"].strip()
     nickname = wechat_instance.get_self_info()["nickname"]
 
+    print("input_prompt")
+    print(input_prompt)
     # 判断消息不是自己发的&不是群消息->回复对方
     if from_wxid != self_wxid and not room_wxid:
-        print("input_prompt")
-        print(input_prompt)
         if input_prompt == "加群":
             try:
                 member = []
@@ -40,6 +42,19 @@ def scenes_msg(wechat_instance, message):
 
         elif input_prompt.split(" ")[0] == "菜单":
             wechat_instance.send_text(to_wxid=from_wxid, content=bot_hi)
+
+        elif input_prompt.split(" ")[0] == "对话":
+            text_prompt = input_prompt.replace("对话 ", "").strip()
+            response = models.knowledge_chat(text_prompt, from_wxid)
+            wechat_instance.send_text(
+                to_wxid=from_wxid, content="【知识库对话回复】" + "\n" + response
+            )
+        elif input_prompt.split(" ")[0] == "结束对话":
+            text_prompt = input_prompt.split(" ")[0].strip()
+            response = models.knowledge_chat(text_prompt, from_wxid)
+            wechat_instance.send_text(
+                to_wxid=from_wxid, content="【知识库对话已结束】"
+            )
 
         elif input_prompt.split(" ")[0] == "绘画":
             text_prompt = data["msg"].split(" ")[1]
@@ -283,6 +298,25 @@ def group_msg(wechat_instance, message):
         except:
             pass
 
+
+def file_msg(wechat_instance, message):
+    data = message["data"]
+    from_wxid = data["from_wxid"]
+    self_wxid = wechat_instance.get_login_info()["wxid"]
+    print('data')
+    print(data)
+    # 判断消息不是自己发的->回复对方
+    if from_wxid != self_wxid:
+        wechat_instance.send_text(
+                to_wxid=from_wxid, content="正在为您生成摘要，请稍等" + "\n" + "发送【对话 描述】即可与该文档内容开始对话"
+            )
+        time.sleep(0.5)
+        knowledge_gene = models.knowledge_generate(data, from_wxid)
+        wechat_instance.send_text(
+                to_wxid=from_wxid, content=knowledge_gene
+            )
+
+        
 
 def addFriend_msg(wechat_instance, message):
     xml_content = message["data"]["raw_msg"]
