@@ -13,15 +13,15 @@ dashscope.api_key = config.config["dashscope_key"]
 
 # ecnu chat
 user_QA = [
-    "情感 搜索 inner",
-    "情感 搜索",
-    "问答 搜索",
-    "教学 搜索",
-    "情感 inner",
+    "ECNU 情感 搜索 inner",
+    "ECNU 情感 搜索",
+    "ECNU 问答 搜索",
+    "ECNU 教学 搜索",
+    "ECNU 情感 inner",
     "ECNU 搜索",
-    "情感",
-    "教学",
-    "问答",
+    "ECNU 情感",
+    "ECNU 教学",
+    "ECNU 问答",
     "ECNU",
 ]
 
@@ -260,17 +260,22 @@ class Model_list:
     def knowledge_chat(self, text_prompt, from_wxid):
         model_name = "article_QA"
         try:   
+            print('sssssssssssssssss')
+            print(text_prompt)
+            print('from_wxid')
+            print(from_wxid)
+            print(self.article_chatglm3_data)
+
             if text_prompt == "结束对话":
-                self.article_chatglm3_data = {}
+                self.article_chatglm3_data.pop[from_wxid]
                 return ""
-            url = "http://127.0.0.1:8001/chat_article"
+            url = "http://127.0.0.1:8002/chat_article"
             print('kkkkkkkkkkkkkkkkkkkkkk')
             print(self.article_chatglm3_data)
             if from_wxid in self.article_chatglm3_data and "messages" in self.article_chatglm3_data[from_wxid]:
                 self.article_chatglm3_data[from_wxid]["messages"].append(
                     {"role": "user", "content": text_prompt}
                 )
-
             else:
                 self.article_chatglm3_data[from_wxid]["messages"] = [{"role": "user", "content": text_prompt}]
             
@@ -286,7 +291,7 @@ class Model_list:
                 {"role": "assistant", "content": response}
             )
             asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
-            time.sleep(1)
+            time.sleep(2)
         except:
             response = "任务存在问题"
             print(response)
@@ -309,7 +314,7 @@ class Model_list:
                 "encode_file": encode_file,
                 "file_type": file_type
             }
-            url = "http://127.0.0.1:8001/chat_knowledge"
+            url = "http://127.0.0.1:8002/chat_knowledge"
             print("知识库创建中...")
             headers = {"Content-Type": "application/json"}
             payload = json.dumps(params)
@@ -317,12 +322,14 @@ class Model_list:
             resp = response.json()
             response = resp["response"]
 
-            self.article_chatglm3_data = {}
+            if from_wxid in self.article_chatglm3_data:
+                self.article_chatglm3_data[from_wxid] = {}
             self.article_chatglm3_data[from_wxid] = {
                 "file_hash": resp['file_hash'],
                 "kb_name": from_wxid
             }
-
+            print('in many...........')
+            print(self.article_chatglm3_data)
             print('response.......')
             print(response)
             return response

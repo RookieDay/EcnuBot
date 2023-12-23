@@ -7,17 +7,32 @@ import base64
 import hashlib
 
 from fastapi import FastAPI, Request
-from transformers import AutoTokenizer, AutoModel
-
+from transformers import AutoModel, AutoTokenizer
 from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 
 from create_knowledge import create_base
+from file_utils import file_loader
 import config
+import torch
 
 app = FastAPI()
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+DEVICE = "cuda"
+DEVICE_ID = [0]
+
+
+def torch_gc():
+    for cuda_id in DEVICE_ID:
+        CUDA_DEVICE = f"{DEVICE}:{cuda_id}" if DEVICE_ID else DEVICE
+        print(CUDA_DEVICE)
+        if torch.cuda.is_available():
+            with torch.cuda.device(CUDA_DEVICE):
+                print("in")
+                torch.cuda.empty_cache()
+                torch.cuda.ipc_collect()
 
 
 def get_file_hash(file_path):
@@ -107,8 +122,8 @@ async def chat(request: Request):
         print("找到了缓存的索引文件，加载中……")
         vectordb = FAISS.load_local(persist_directory, embeddings)
     docs = vectordb.similarity_search(query, k=5)
-    page = list(set([docs.metadata["page"] for docs in docs]))
-    page.sort()
+    # page = list(set([docs.metadata["page"] for docs in docs]))
+    # page.sort()
     context = [docs.page_content for docs in docs]
     #
     #
@@ -132,6 +147,7 @@ async def chat(request: Request):
         "time": now.strftime("%Y-%m-%d %H:%M:%S"),
     }
     print(answer)
+    torch_gc()
     return answer
 
 
@@ -153,7 +169,7 @@ async def chat(request: Request):
     file_path = os.path.join(config.config["file_path"], kb_name)
     if not os.path.exists(file_path):
         os.makedirs(file_path)
-    file_path = os.path.join(file_path, f"{file_name}.pdf")
+    file_path = os.path.join(file_path, f"{str(file_name)+str(file_type)}")
     print("file path")
     print(file_path)
     # 写入base64文件
@@ -193,22 +209,25 @@ async def chat(request: Request):
         print("找到了缓存的索引文件，加载中……")
         vectordb = FAISS.load_local(persist_directory, embeddings)
     else:
-        loader = PyPDFLoader(file_path)
+        # loader = PyPDFLoader(file_path)
         print("loader...")
-        docs_load = loader.load()
-        print(f"docs: {docs_load}")
-        documents = []
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500, chunk_overlap=200
-        )
-        docs_load = text_splitter.split_documents(docs_load)
-        documents.extend(docs_load)
+        # docs_load = loader.load()
+        #         docs_load = file_loader(file_path, file_type)
+
+        #         print(f"docs: {docs_load}")
+        #         documents = []
+        #         text_splitter = RecursiveCharacterTextSplitter(
+        #             chunk_size=500, chunk_overlap=200
+        #         )
+        #         docs_load = text_splitter.split_documents(docs_load)
+        #         documents.extend(docs_load)
+        documents = file_loader(file_path, file_type)
         vectordb = FAISS.from_documents(documents, embeddings)
         vectordb.save_local(persist_directory)
 
     docs = vectordb.similarity_search(query, k=5)
-    page = list(set([docs.metadata["page"] for docs in docs]))
-    page.sort()
+    # page = list(set([docs.metadata["page"] for docs in docs]))
+    # page.sort()
     context = [docs.page_content for docs in docs]
     #
     #
@@ -227,7 +246,7 @@ async def chat(request: Request):
         "file_hash": file_hash,
     }
     print(answer)
-
+    torch_gc()
     return answer
 
 
@@ -239,9 +258,10 @@ if __name__ == "__main__":
         AutoModel.from_pretrained(model_path, trust_remote_code=True)
         .quantize(4)
         .half()
-        .cuda()
+        .cuda(0)
     )
     print("load ok...")
 
     model.eval()
-    uvicorn.run(app, host="127.0.0.1", port=8001, workers=1)
+
+    uvicorn.run(app, host="127.0.0.1", port=8002, workers=1)
