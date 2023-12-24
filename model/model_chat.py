@@ -266,9 +266,10 @@ class Model_list:
             print(from_wxid)
             print(self.article_chatglm3_data)
 
-            if text_prompt == "结束对话":
-                self.article_chatglm3_data.pop[from_wxid]
-                return ""
+            if text_prompt == "结束对话" and from_wxid in self.article_chatglm3_data:
+                del self.article_chatglm3_data[from_wxid]
+                print('in....pop')
+                return "结束对话"
             url = "http://127.0.0.1:8002/chat_article"
             print('kkkkkkkkkkkkkkkkkkkkkk')
             print(self.article_chatglm3_data)

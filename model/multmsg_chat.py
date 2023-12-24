@@ -137,7 +137,7 @@ def scenes_msg(wechat_instance, message):
             response = models.knowledge_chat(text_prompt, from_wxid)
             wechat_instance.send_room_at_msg(
                 to_wxid=room_wxid,
-                content="{$@} " + "【知识库对话已结束】" + "\n" + response,
+                content="{$@} " + "【知识库对话已结束】",
                 at_list=member,
             )
 
@@ -266,19 +266,53 @@ def voice_msg(wechat_instance, message, whisper_mp3):
     room_wxid = data["room_wxid"]
     type_wx = message["type"]
 
-    if from_wxid != self_wxid and not room_wxid:
+    if from_wxid != self_wxid:
         # 语音的type
         if type_wx == 11048:
             mp3_file = data["mp3_file"]
-            wechat_instance.send_text(to_wxid=from_wxid, content=f"正在为您解答，请您耐心等待！")
-            mp3_text = whisper_mp3.whisper_mp3(mp3_file)
-            print("mp3_text..............", mp3_text)
-            text_prompt = mp3_text
-            response = models.qianfan(text_prompt, from_wxid)
-            wechat_instance.send_text(
-                to_wxid=from_wxid,
-                content="【百度千帆大模型回复】" + "\n" + "语音转文字:" + mp3_text + "\n" + response,
-            )
+
+            if room_wxid:
+                member = []
+                member.append(data["from_wxid"])
+                wechat_instance.send_room_at_msg(
+                    to_wxid=room_wxid,
+                    content="{$@} " + "正在为您解答，请您耐心等待！",
+                    at_list=member,
+                )
+                print("whisper......")
+                mp3_text = whisper_mp3.whisper_mp3(mp3_file)
+                print("mpsssss")
+                print(mp3_text)
+                text_prompt = mp3_text
+                response = models.qianfan(text_prompt, from_wxid)
+                wechat_instance.send_room_at_msg(
+                    to_wxid=room_wxid,
+                    content="{$@} "
+                    + "【百度千帆大模型回复】"
+                    + "\n"
+                    + "语音转文字:"
+                    + mp3_text
+                    + "\n"
+                    + response,
+                    at_list=member,
+                )
+            else:
+                wechat_instance.send_text(to_wxid=from_wxid, content=f"正在为您解答，请您耐心等待！")
+                print("whisper......")
+                mp3_text = whisper_mp3.whisper_mp3(mp3_file)
+                print("mpsssss")
+                print(mp3_text)
+                text_prompt = mp3_text
+                response = models.qianfan(text_prompt, from_wxid)
+                wechat_instance.send_text(
+                    to_wxid=from_wxid,
+                    content="【百度千帆大模型回复】"
+                    + "\n"
+                    + "语音转文字:"
+                    + mp3_text
+                    + "\n"
+                    + response,
+                )
 
     # 以下的通过接口的实现方式，
     # url = "http://127.0.0.1:8000/content"
