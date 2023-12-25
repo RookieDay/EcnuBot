@@ -125,11 +125,12 @@ class Model_list:
                         {"role": "user", "content": text_prompt},
                     ]
                 }
-
+            print('jjjjjj')
             response = dashscope.Generation.call(
                 model="chatglm3-6b",
                 messages=self.tongyi_chatglm3_data[from_wxid]["messages"],
             )
+            print(response)
             # chatglm3 返回的值 前面有空行，特此替换掉
             response = response["output"]["text"][2:]
             self.tongyi_chatglm3_data[from_wxid]["messages"].append(

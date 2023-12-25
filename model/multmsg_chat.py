@@ -7,7 +7,7 @@ from utils import config, drawer
 from .model_chat import Model_list, user_QA
 
 # ecnu chat
-bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：无需@EcnuBboat，私信或者交流群直接发送语音\n\n4.【知识库答复】交互方式：无需@EcbuBot，私信或者交流群内直接发送链接/文件即可进行摘要获取&对话。\n(1)文件支持：pdf、docx、xlsx、pptx、txt\n(2)链接支持：私信或者群内直接发送链接即可或者以文字形式发送【摘要 链接】\n\n5.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
+bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 问答 搜索 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：无需@EcnuBboat，私信或者交流群直接发送语音\n\n4.【知识库问答】交互方式：无需@EcbuBot，私信或者交流群内直接发送链接/文件即可进行摘要获取&对话。\n(1)文件支持：pdf、docx、xlsx、pptx、txt\n(2)链接支持：私信或者群内直接发送链接即可或者以文字形式发送【摘要 链接】\n\n5.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
 bot_hi_newFri = f"您好，我是EcnuBot，您的AI小伙伴。您可以私信EcnuBot发送“加群”，加入EcnuBot体验交流群。"
 models = Model_list()
 
@@ -113,6 +113,9 @@ def scenes_msg(wechat_instance, message):
                     break
             # text_prompt = input_prompt.replace('ECNU ', '')
             text_prompt = input_prompt.replace(quest, "").strip()
+            print('text_prompt.............')
+            print(text_prompt)
+            print(quest)
             response = models.ecnu_chat(quest, text_prompt, from_wxid)
             wechat_instance.send_text(
                 to_wxid=from_wxid, content="【ECNU大模型回复】" + "\n" + response
