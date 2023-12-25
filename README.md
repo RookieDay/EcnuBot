@@ -118,7 +118,7 @@ python .\main.py
 <details><summary><b>知识库问答</b></summary>
 
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/knowledge1.png)
-![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/knowledge1.png)
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/knowledge2.png)
 
 </details>
 
