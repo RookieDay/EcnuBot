@@ -24,6 +24,7 @@
 **⚡ 支持**   
 * [x] web端
 * [x] 自动问答
+* [x] educhat联网搜索
 * [x] 知识库问答（支持pdf、xlsx、docx、pptx、txt、链接）
 * [x] 关键词触发回复
 * [x] 私信语音识别答复
@@ -126,6 +127,12 @@ python .\main.py
 <details><summary><b>ECNU 情感</b></summary>
 
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/EcnuEmotion.png)
+
+</details>
+
+<details><summary><b>EduChat 问答联网搜索</b></summary>
+
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/QA_search2.png)
 
 </details>
 
