@@ -24,7 +24,7 @@
 **⚡ 支持**   
 * [x] web端
 * [x] 自动问答
-* [x] 知识库问答
+* [x] 知识库问答（支持pdf、xlsx、docx、pptx、txt、链接）
 * [x] 关键词触发回复
 * [x] 私信语音识别答复
 * [x] 自动添加好友
@@ -113,6 +113,15 @@ python .\main.py
 ![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/txt2image.png)
 
 </details>
+
+
+<details><summary><b>知识库问答</b></summary>
+
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/knowledge1.png)
+![image](https://github.com/RookieDay/EcnuBot/blob/main/examples/knowledge1.png)
+
+</details>
+
 
 <details><summary><b>ECNU 情感</b></summary>
 

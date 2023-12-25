@@ -7,7 +7,7 @@ from utils import config, drawer
 from .model_chat import Model_list, user_QA
 
 # ecnu chat
-bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：私信EcnuBot发送语音\n\n4.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
+bot_hi = f"您好，我是EcnuBot，您的AI小伙伴。目前支持以下能力：\n\n1. 【文生图】交互方式：绘画 英文描述\n如：绘画 snowing winter, super cute baby pixar style white fairy bear, shiny snow-white fluffy, big bright eyes, wearing a woolly cyan hat, delicate and fine, ...\n\n2.【自动问答】交互方式\n(1) Educhat大模型：\n    ECNU 问答 描述\n    ECNU 教学 描述\n    ECNU 情感 描述\n    ECNU 情感 inner 描述\n(2) 通义千问大模型：千问 描述\n(3) ChatGLM3：ChatGLM3 描述\n(4) 千帆大模型：千帆 描述\n(5) 千帆大模型：描述\n\n3.【答复语音】交互方式：无需@EcnuBboat，私信或者交流群直接发送语音\n\n4.【知识库答复】交互方式：无需@EcbuBot，私信或者交流群内直接发送链接/文件即可进行摘要获取&对话。\n(1)文件支持：pdf、docx、xlsx、pptx、txt\n(2)链接支持：私信或者群内直接发送链接即可或者以文字形式发送【摘要 链接】\n\n5.【其他】如您未在EcnuBot交流群，可私信EcnuBot发送“加群”，即可加入EcnuBot交流群。\n\n注：群聊内需@EcnuBot才可触发上述功能，且@是真正@，并非复制！"
 bot_hi_newFri = f"您好，我是EcnuBot，您的AI小伙伴。您可以私信EcnuBot发送“加群”，加入EcnuBot体验交流群。"
 models = Model_list()
 
@@ -40,6 +40,21 @@ def scenes_msg(wechat_instance, message):
 
         elif input_prompt.split(" ")[0] == "菜单":
             wechat_instance.send_text(to_wxid=from_wxid, content=bot_hi)
+
+        elif input_prompt.split(" ")[0] == "摘要":
+            text_prompt = input_prompt.replace("摘要", "").strip()
+            wechat_instance.send_text(
+                to_wxid=from_wxid,
+                content="正在为您生成摘要，请稍等"
+                + "\n"
+                + "发送【对话 描述】即可与该链接内容开始对话"
+                + "\n"
+                + "发送【结束对话】即可与该链接内容结束对话",
+            )
+            response = models.knowledge_link(from_wxid, "", text_prompt)
+            wechat_instance.send_text(
+                to_wxid=from_wxid, content="【链接摘要如下】" + "\n" + response
+            )
 
         elif input_prompt.split(" ")[0] == "对话":
             text_prompt = input_prompt.replace("对话", "").strip()
@@ -130,6 +145,25 @@ def scenes_msg(wechat_instance, message):
             wechat_instance.send_room_at_msg(
                 to_wxid=room_wxid,
                 content="{$@} " + "【知识库对话回复】" + "\n" + response,
+                at_list=member,
+            )
+        elif article_prompt.split(" ")[0] == "摘要":
+            text_prompt = article_prompt.replace("摘要", "").strip()
+            wechat_instance.send_room_at_msg(
+                to_wxid=room_wxid,
+                content="{$@} "
+                + "\n"
+                + "正在为您生成摘要，请稍等"
+                + "\n"
+                + "发送【对话 描述】即可与该链接内容开始对话"
+                + "\n"
+                + "发送【结束对话】即可与该链接内容结束对话",
+                at_list=member,
+            )
+            response = models.knowledge_link(from_wxid, "", text_prompt)
+            wechat_instance.send_room_at_msg(
+                to_wxid=room_wxid,
+                content="{$@} " + "【链接摘要如下】" + "\n" + response,
                 at_list=member,
             )
         elif article_prompt.split(" ")[0] == "结束对话":
@@ -379,7 +413,7 @@ def file_msg(wechat_instance, message):
             knowledge_gene = models.knowledge_generate(data, from_wxid)
             wechat_instance.send_room_at_msg(
                 to_wxid=room_wxid,
-                content="{$@} " + "摘要如下：" + "\n" + knowledge_gene,
+                content="{$@} " + "文档摘要如下：" + "\n" + knowledge_gene,
                 at_list=member,
             )
 
@@ -396,7 +430,71 @@ def file_msg(wechat_instance, message):
             time.sleep(0.5)
             knowledge_gene = models.knowledge_generate(data, from_wxid)
             wechat_instance.send_text(
-                to_wxid=from_wxid, content="摘要如下：" + "\n" + knowledge_gene
+                to_wxid=from_wxid, content="文档摘要如下：" + "\n" + knowledge_gene
+            )
+
+
+def link_msg(wechat_instance, message):
+    xml_content = message["data"]["raw_msg"]
+    dom = xml.dom.minidom.parseString(xml_content)
+    data = message["data"]
+    from_wxid = data["from_wxid"]
+    self_wxid = wechat_instance.get_login_info()["wxid"]
+    room_wxid = data["room_wxid"]
+    link_title = (
+        dom.documentElement.getElementsByTagName("appmsg")[0]
+        .getElementsByTagName("title")[0]
+        .childNodes[0]
+        .nodeValue
+    )
+    link_url = (
+        dom.documentElement.getElementsByTagName("appmsg")[0]
+        .getElementsByTagName("url")[0]
+        .childNodes[0]
+        .nodeValue
+    )
+    print("data")
+    print(data)
+    print(link_title)
+    print(link_url)
+    # 判断消息不是自己发的->回复对方
+    if from_wxid != self_wxid:
+        if room_wxid:
+            member = []
+            member.append(data["from_wxid"])
+            wechat_instance.send_room_at_msg(
+                to_wxid=room_wxid,
+                content="{$@} "
+                + "\n"
+                + "正在为您生成摘要，请稍等"
+                + "\n"
+                + "发送【对话 描述】即可与该链接内容开始对话"
+                + "\n"
+                + "发送【结束对话】即可与该链接内容结束对话",
+                at_list=member,
+            )
+            time.sleep(0.5)
+            knowledge_gene = models.knowledge_link(from_wxid, link_title, link_url)
+            wechat_instance.send_room_at_msg(
+                to_wxid=room_wxid,
+                content="{$@} " + "链接摘要如下：" + "\n" + knowledge_gene,
+                at_list=member,
+            )
+
+            pass
+        else:
+            wechat_instance.send_text(
+                to_wxid=from_wxid,
+                content="正在为您生成摘要，请稍等"
+                + "\n"
+                + "发送【对话 描述】即可与该链接内容开始对话"
+                + "\n"
+                + "发送【结束对话】即可与该链接内容结束对话",
+            )
+            time.sleep(0.5)
+            knowledge_gene = models.knowledge_link(from_wxid, link_title, link_url)
+            wechat_instance.send_text(
+                to_wxid=from_wxid, content="链接摘要如下：" + "\n" + knowledge_gene
             )
 
 

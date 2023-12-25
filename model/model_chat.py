@@ -3,11 +3,13 @@ import json
 import time
 import openai
 import requests
-import asyncio                  
+import asyncio
 from utils import config, user_data
 import base64
 import dashscope
+import urllib
 import os
+import hashlib
 
 dashscope.api_key = config.config["dashscope_key"]
 
@@ -24,6 +26,24 @@ user_QA = [
     "ECNU 问答",
     "ECNU",
 ]
+
+import re
+
+
+def clean(html: str) -> str:
+    """Remove HTML markup from the given string."""
+    # Remove inline JavaScript/CSS, HTML comments, and HTML tags
+    cleaned_html = re.sub(
+        r"(?is)<(script|style).*?>.*?(</\1>)|<!--(.*?)-->[\n]?|<(?s).*?>",
+        "",
+        html.strip(),
+    )
+
+    # Deal with whitespace and HTML entities
+    cleaned_html = re.sub(r"&nbsp;|  |\t|&.*?;[0-9]*&.*?;|&.*?;", "", cleaned_html)
+
+    return cleaned_html.strip()
+
 
 class Model_list:
     def __init__(
@@ -44,7 +64,7 @@ class Model_list:
 
     def qianwen(self, text_prompt, from_wxid):
         # 通义大模型qwen-max
-        model_name = 'qwen-max'
+        model_name = "qwen-max"
         try:
             if from_wxid in self.tongyi_data:
                 self.tongyi_data[from_wxid]["messages"].append(
@@ -74,7 +94,15 @@ class Model_list:
             self.tongyi_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
         except:
             print(response)
@@ -107,7 +135,15 @@ class Model_list:
             self.tongyi_chatglm3_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
         except:
             response = "任务存在问题"
@@ -146,7 +182,15 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
         except:
             response = "任务存在问题"
@@ -186,7 +230,15 @@ class Model_list:
             self.qianfan_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
         except:
             print(response)
@@ -218,7 +270,15 @@ class Model_list:
             self.ecnu_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
         except:
             response = "任务存在问题"
@@ -248,7 +308,15 @@ class Model_list:
             self.thudm_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(1)
 
         except:
@@ -256,30 +324,34 @@ class Model_list:
             print(response)
         return response
 
-    
     def knowledge_chat(self, text_prompt, from_wxid):
         model_name = "article_QA"
-        try:   
-            print('sssssssssssssssss')
+        try:
+            print("sssssssssssssssss")
             print(text_prompt)
-            print('from_wxid')
+            print("from_wxid")
             print(from_wxid)
             print(self.article_chatglm3_data)
 
             if text_prompt == "结束对话" and from_wxid in self.article_chatglm3_data:
                 del self.article_chatglm3_data[from_wxid]
-                print('in....pop')
+                print("in....pop")
                 return "结束对话"
             url = "http://127.0.0.1:8002/chat_article"
-            print('kkkkkkkkkkkkkkkkkkkkkk')
+            print("kkkkkkkkkkkkkkkkkkkkkk")
             print(self.article_chatglm3_data)
-            if from_wxid in self.article_chatglm3_data and "messages" in self.article_chatglm3_data[from_wxid]:
+            if (
+                from_wxid in self.article_chatglm3_data
+                and "messages" in self.article_chatglm3_data[from_wxid]
+            ):
                 self.article_chatglm3_data[from_wxid]["messages"].append(
                     {"role": "user", "content": text_prompt}
                 )
             else:
-                self.article_chatglm3_data[from_wxid]["messages"] = [{"role": "user", "content": text_prompt}]
-            
+                self.article_chatglm3_data[from_wxid]["messages"] = [
+                    {"role": "user", "content": text_prompt}
+                ]
+
             print(self.article_chatglm3_data)
 
             payload = json.dumps(self.article_chatglm3_data[from_wxid])
@@ -291,7 +363,15 @@ class Model_list:
             self.article_chatglm3_data[from_wxid]["messages"].append(
                 {"role": "assistant", "content": response}
             )
-            asyncio.run(user_data.storge_data(from_wxid, text_prompt, response, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), model_name))
+            asyncio.run(
+                user_data.storge_data(
+                    from_wxid,
+                    text_prompt,
+                    response,
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    model_name,
+                )
+            )
             time.sleep(2)
         except:
             response = "任务存在问题"
@@ -299,12 +379,12 @@ class Model_list:
         return response
 
     def knowledge_generate(self, data, from_wxid):
-        file_path = data['file']
+        file_path = data["file"]
         try:
-            file_name = os.path.split(file_path)[1].split('.')[0]
+            file_name = os.path.split(file_path)[1].split(".")[0]
             file_type = os.path.splitext(file_path)[1]
-            print('filename', file_name)
-            print('file_type', file_type)
+            print("filename", file_name)
+            print("file_type", file_type)
             with open(file_path, "rb") as p_file:
                 encode_file = base64.b64encode(p_file.read())
                 encode_file = encode_file.decode("utf-8")
@@ -313,7 +393,7 @@ class Model_list:
                 "kb_name": from_wxid,
                 "file_name": file_name,
                 "encode_file": encode_file,
-                "file_type": file_type
+                "file_type": file_type,
             }
             url = "http://127.0.0.1:8002/chat_knowledge"
             print("知识库创建中...")
@@ -326,16 +406,74 @@ class Model_list:
             if from_wxid in self.article_chatglm3_data:
                 self.article_chatglm3_data[from_wxid] = {}
             self.article_chatglm3_data[from_wxid] = {
-                "file_hash": resp['file_hash'],
-                "kb_name": from_wxid
+                "file_hash": resp["file_hash"],
+                "kb_name": from_wxid,
             }
-            print('in many...........')
+            print("in many...........")
             print(self.article_chatglm3_data)
-            print('response.......')
+            print("response.......")
             print(response)
             return response
-            
+
         except:
-            print("Failed to connect. Status code:", response.status_code)
+            print("Failed to connect. Status code")
+            print("知识库创建失败")
+            return "抱歉，摘要生成失败"
+
+    def knowledge_link(self, from_wxid, link_title, link_url):
+        # 从xml取相关参数
+        print("in...............")
+        res_text = requests.get(link_url).text.replace("\n", "")
+        print(res_text)
+        if link_title == "":
+            import hashlib
+
+            md5 = hashlib.md5()
+            md5.update(link_url.encode("utf-8"))
+            link_title = md5.hexdigest()
+        file_name = link_title
+        link_txt = clean(res_text)
+        if len(link_txt) < 5:
+            return "抱歉，摘要生成失败"
+        print(link_txt)
+
+        encode_file = base64.b64encode(link_txt.encode("utf-8")).decode("utf-8")
+        file_type = ".txt"
+        print("link_txt")
+        print(link_title)
+        print(link_url)
+        print(link_txt)
+        try:
+            params = {
+                "kb_name": from_wxid,
+                "file_name": file_name,
+                "encode_file": encode_file,
+                "file_type": file_type,
+            }
+            url = "http://127.0.0.1:8002/chat_knowledge"
+            print("知识库创建中...")
+            headers = {"Content-Type": "application/json"}
+            payload = json.dumps(params)
+            print("ojjjjjxxxx")
+            response = requests.post(url, data=payload, headers=headers)
+            print("response.........")
+            print("ojjjjj")
+            resp = response.json()
+            response = resp["response"]
+
+            if from_wxid in self.article_chatglm3_data:
+                self.article_chatglm3_data[from_wxid] = {}
+            self.article_chatglm3_data[from_wxid] = {
+                "file_hash": resp["file_hash"],
+                "kb_name": from_wxid,
+            }
+            print("in many...........")
+            print(self.article_chatglm3_data)
+            print("response.......")
+            print(response)
+            return response
+
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print("Failed to connect. Status code")
             print("知识库创建失败")
             return "抱歉，摘要生成失败"
